@@ -13,7 +13,11 @@
     "vue-gettext": "^2.1.2"
   },
   "devDependencies": {
-    "glob": "^7.1.3"
+    "glob": "^7.1.3",
+    "rollup-plugin-vue": "^4.2.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-require-context": "0.0.2"
   },
   "scripts": {
     "build-locales": "rollup -c",
@@ -23,11 +27,23 @@
     "merge-locales": "bash ./locale/wucmf-merge-locale.sh messages ru_UA && bash ./locale/wucmf-merge-locale.sh messages uk_UA"
   },
   "keywords": [
+    "rollup",
     "gettext",
     "extractor",
     "po-file",
     "vue"
   ],
   "author": "Serhii Niiachenko",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "example": "example"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nceregao/rollup-plugin-gettext-vue.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nceregao/rollup-plugin-gettext-vue/issues"
+  },
+  "homepage": "https://github.com/nceregao/rollup-plugin-gettext-vue#readme"
 }
