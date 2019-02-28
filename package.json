@@ -1,0 +1,33 @@
+{
+  "name": "rollup-plugin-gettext-vue",
+  "version": "1.0.0",
+  "description": "Rollup plugin Gettext extractor for Vue components, JS",
+  "main": "./dist/index.js",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "gettext-extractor": "^3.4.2",
+    "plural-forms": "^0.3.0",
+    "pofile": "^1.0.11",
+    "rollup-pluginutils": "^2.4.1",
+    "typescript": "^3.3.3",
+    "vue-gettext": "^2.1.2"
+  },
+  "devDependencies": {
+    "glob": "^7.1.3"
+  },
+  "scripts": {
+    "build-locales": "rollup -c",
+    "gen-pot": "rollup -c rollup.genlocale.config.js",
+    "gen-messages": "node genlocale.js",
+    "init-locales": "bash ./locale/wucmf-init-locale.sh messages ru_UA && bash ./locale/wucmf-init-locale.sh messages uk_UA",
+    "merge-locales": "bash ./locale/wucmf-merge-locale.sh messages ru_UA && bash ./locale/wucmf-merge-locale.sh messages uk_UA"
+  },
+  "keywords": [
+    "gettext",
+    "extractor",
+    "po-file",
+    "vue"
+  ],
+  "author": "Serhii Niiachenko",
+  "license": "ISC"
+}

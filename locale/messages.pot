@@ -1,0 +1,19 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals = 2; plural = (n !== 1)\n"
+"Language: en\n"
+
+#: example/app.js:15
+#: example/dist/app.ru.js:202
+#: example/dist/app.uk.js:202
+msgid "App mounted"
+msgstr ""
+
+#: example/components/component.vue:8
+msgid "Close"
+msgstr ""
+
+#: example/components/component.vue:25
+msgid "Start"
+msgstr ""
