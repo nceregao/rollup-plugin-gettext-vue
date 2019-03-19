@@ -5,15 +5,30 @@ msgstr ""
 "Language: en\n"
 
 #: example/app.js:15
-#: example/dist/app.ru.js:202
-#: example/dist/app.uk.js:202
 msgid "App mounted"
 msgstr ""
 
-#: example/components/component.vue:8
+#: example/components/component.vue:12
 msgid "Close"
 msgstr ""
 
-#: example/components/component.vue:25
+#: example/components/component.vue:31
 msgid "Start"
+msgstr ""
+
+#: example/components/component.vue:9
+msgid "Test alt."
+msgstr ""
+
+#: example/components/component.vue:8
+msgid "test placeholder..."
+msgstr ""
+
+#: example/components/component.vue:10
+#: example/components/component.vue:14
+msgid "Защитный код"
+msgstr ""
+
+#: example/components/component.vue:11
+msgid "Нажмите для получения нового кода"
 msgstr ""

@@ -2,6 +2,7 @@ const { createFilter } = require('rollup-pluginutils');
 const { GettextExtractor } =  require('gettext-extractor');
 const pluralForm = require('plural-forms');
 const pofile = require('pofile');
+const { SourceMapGenerator } = require('source-map');
 
 const decorateExtractorWithPlurals = require('./decorateExtractorWithPlurals.js');
 const callExpressionWithLiteral = require('./callExpressionWithLiteral.js');
@@ -50,9 +51,16 @@ function gettext( options = {} ) {
         });
     }
 
+    let sourcemap;
+
     return {
         name: "rollup-plugin-gettext-vue",
-        intro (){
+        options(bundleOpts) {
+            sourcemap = 'sourcemap' in options ?
+                options.sourcemap :
+                bundleOpts.sourcemap !== false;
+        },
+        intro() {
             let pluralFunc = pluralForm.getPluralFunc(language);
             let nplurals = pluralForm.getNPlurals(language);
             let results = 'const PLURAL = '+config.calleeFunctions.PLURAL;
@@ -65,21 +73,24 @@ function gettext( options = {} ) {
 
             return results;
         },
-        transform ( code, id ) {
+        transform(code, id) {
             if ( !filter( id ) ) return ;
 
             vueParser.parseSourceFile(code, id);
 
             return vueParser.replaceMessageNodes(code, id, translationObj)
                 .then(function(source){
+                    var map = sourcemap ? new SourceMapGenerator({file: id}) : '';
+
                     return {
-                        code: source
+                        code: source,
+                        map: map.toString()
                     };
                 }).catch(function(err){
 
                 });
         },
-        buildEnd (error) {
+        buildEnd(error) {
             if ( options.output ) {
                 let npluralsFiles = pluralForm.getNPlurals(languageFiles);
                 let headers = {
@@ -90,7 +101,7 @@ function gettext( options = {} ) {
             }
 
             extractor.printStats();
-        },
+        }
     };
 }
 

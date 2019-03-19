@@ -36,6 +36,7 @@ export default locales.map((ln) => {
             file: 'example/dist/app.'+ln+'.js',
             format: 'iife',
             name: 'WUJS',
+            sourcemap: true
         }
     }
 });
