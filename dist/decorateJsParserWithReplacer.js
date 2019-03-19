@@ -107,7 +107,7 @@ function getItemToReplace(node, message, translationObj){
 
 function resolveGettext(node, item){
     let text = item ? (item.nplurals > 1 ? item.msgstr[0] : item.msgstr) || item.msgid : '',
-        resultText = item ? ts.getLiteralText(ts.createStringLiteral(text)) : node.arguments[0].getText();
+        resultText = item ? ts.getLiteralText(ts.createLiteral(text, ts.isSingleOrDoubleQuote(node.arguments[0].getText().charCodeAt(0)))) : node.arguments[0].getText();
 
     return resultText;
 }
