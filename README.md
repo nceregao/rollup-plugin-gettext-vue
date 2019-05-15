@@ -4,7 +4,7 @@ Is a plugin to translate js, vue files with [`gettext`](http://www.labri.fr/pers
 
 ## Installation
 
-You must copy folder to ./node_modules/rollup-plugin-gettext-vue
+npm install rollup-plugin-gettext-vue
 
 ## Configuration rollup config
 
