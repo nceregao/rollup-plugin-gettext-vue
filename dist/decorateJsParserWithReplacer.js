@@ -54,8 +54,9 @@ module.exports = function (jsParser) {
         });
 
         // парсинг и перебор строковых литералов
-        if ( ts.isStringLiteral(node) ){
-            let srcText = ts.createSourceFile(sourceFile.fileName, node.text, ts.ScriptTarget.Latest, true);
+        if ( node.getStart() > 0 && (ts.isStringLiteral(node) || ts.isRegularExpressionLiteral(node)) ){
+            let text = ts.isRegularExpressionLiteral(node) ? node.getText().slice(1) : node.text;
+            let srcText = ts.createSourceFile(sourceFile.fileName, text, ts.ScriptTarget.Latest, true);
             let lineNumberStartText = lineNumberStart+ sourceFile.getLineAndCharacterOfPosition(node.getStart()).line;
             ts.forEachChild(srcText, n => {
                 messages = messages.concat(jsParser.parseNodeSource(n, srcText, lineNumberStartText));
