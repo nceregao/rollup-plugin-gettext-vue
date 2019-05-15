@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-gettext-vue",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Rollup plugin Gettext extractor for Vue components, JS",
   "main": "./dist/index.js",
   "dependencies": {
