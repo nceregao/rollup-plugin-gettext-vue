@@ -78,7 +78,7 @@ module.exports = function (jsParser) {
 
         return new Promise(function(resolve, reject){
             jsParser.replacements.forEach(function(item){
-                if ( fileName.indexOf(item.fileName) >= 0 ) {
+                if ( fileName.replace(/\\/g, '/').indexOf(item.fileName) >= 0 ) {
                     var replaceItem = getItemToReplace(item.node, item.message, translationObj);
                     source = source.replace(replaceItem.srcTxt, replaceItem.dstStr);
                     // console.log( replaceItem.srcTxt, replaceItem.dstStr )

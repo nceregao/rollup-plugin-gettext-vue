@@ -15,6 +15,7 @@ const plugins = [
         languageFiles: 'uk',
         language: 'ru',
         translations: 'messages.po',
+        stats: true
     }),
     vue({
         template: {

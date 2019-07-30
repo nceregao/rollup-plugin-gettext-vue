@@ -1,9 +1,15 @@
 const defaultLanguage = 'en';
 
+const LOCALES_EXT = {
+    'en': 'en_EN',
+    'ru': 'ru_RU',
+    'uk': 'uk_UA',
+};
+
 const LOCALEDIRMAP = {
-    'en': 'locale/en/LC_MESSAGES/',
-    'ru': "locale/ru_UA/LC_MESSAGES/",
-    'uk': "locale/uk_UA/LC_MESSAGES/",
+    'en': 'locale/en_EN/LC_MESSAGES/',
+    'ru': 'locale/ru_RU/LC_MESSAGES/',
+    'uk': 'locale/uk_UA/LC_MESSAGES/',
 };
 
 const calleeNames = {
@@ -90,6 +96,7 @@ const optionsArray = [{
 
 module.exports = {
     defaultLanguage: defaultLanguage,
+    localesExt: LOCALES_EXT,
     localedirmap: LOCALEDIRMAP,
     optionsArray: optionsArray,
     calleeNames: calleeNames,

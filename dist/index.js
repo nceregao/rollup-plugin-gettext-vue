@@ -95,12 +95,14 @@ function gettext( options = {} ) {
                 let npluralsFiles = pluralForm.getNPlurals(languageFiles);
                 let headers = {
                     "Plural-Forms": pluralForm.getPluralFormsHeader(languageFiles),
-                    "Language": languageFiles
+                    "Language": config.localesExt[languageFiles] || languageFiles,
                 };
                 extractor.savePotFile(options.output, headers, npluralsFiles);
             }
 
-            extractor.printStats();
+            if ( options.stats ) {
+                extractor.printStats();
+            }
         }
     };
 }
