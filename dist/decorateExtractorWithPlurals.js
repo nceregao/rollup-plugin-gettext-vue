@@ -37,7 +37,7 @@ module.exports = function (extractor) {
             item.msgid = message.text;
             item.msgid_plural = message.textPlural;
             item.msgctxt = message.context;
-            item.references = message.references.sort((a, b) => a.localeCompare(b));
+            item.references = message.references.map(r => { return r.replace(process.cwd(), '.') }).sort((a, b) => a.localeCompare(b));
             item.extractedComments = message.comments;
             return item;
         });

@@ -1,14 +1,14 @@
 const defaultLanguage = 'en';
 
 const LOCALES_EXT = {
-    'en': 'en_EN',
-    'ru': 'ru_RU',
+    'en': 'en_US',
+    'ru': 'ru_UA',
     'uk': 'uk_UA',
 };
 
 const LOCALEDIRMAP = {
-    'en': 'locale/en_EN/LC_MESSAGES/',
-    'ru': 'locale/ru_RU/LC_MESSAGES/',
+    'en': 'locale/en_US/LC_MESSAGES/',
+    'ru': 'locale/ru_UA/LC_MESSAGES/',
     'uk': 'locale/uk_UA/LC_MESSAGES/',
 };
 

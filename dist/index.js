@@ -35,8 +35,8 @@ function gettext( options = {} ) {
         }
 
         if ( !options.translations.endsWith('.po') ) {
-            return {};
             console.error( 'Translations file must by PO format' )
+            return {};
         }
 
         let file = config.localedirmap[language] + options.translations;
