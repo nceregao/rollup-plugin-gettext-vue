@@ -3,6 +3,7 @@ const { GettextExtractor } =  require('gettext-extractor');
 const pluralForm = require('plural-forms');
 const pofile = require('pofile');
 const { SourceMapGenerator } = require('source-map');
+const fs = require('fs');
 
 const decorateExtractorWithPlurals = require('./decorateExtractorWithPlurals.js');
 const callExpressionWithLiteral = require('./callExpressionWithLiteral.js');
@@ -40,15 +41,13 @@ function gettext( options = {} ) {
         }
 
         let file = config.localedirmap[language] + options.translations;
-
-        pofile.load(file, function(err, data){
-            if ( err ) {
-                console.error( `ERROR open ${file}` );
-                return false;
-            }
-
-            translationObj = data;
-        });
+        let data = fs.readFileSync(file, 'utf-8');
+        if (data) {
+            translationObj = pofile.parse(data);
+        } else {
+            console.error( `ERROR open ${file}` );
+            return false;
+        }
     }
 
     let sourcemap;
@@ -86,9 +85,10 @@ function gettext( options = {} ) {
                         code: source,
                         map: map.toString()
                     };
-                }).catch(function(err){
-
-                });
+                })
+                .catch(function(err){
+                    console.log(err);
+                })
         },
         buildEnd(error) {
             if ( options.output ) {
