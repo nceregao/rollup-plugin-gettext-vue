@@ -31,22 +31,28 @@ function gettext( options = {} ) {
 
     if ( options.translations ) {
         if ( config.localedirmap[language] == undefined ) {
-            console.error( 'Locale dir is not setting' );
+            console.error( 'Locale dir is not setting ', language);
             return {};
         }
 
         if ( !options.translations.endsWith('.po') ) {
-            console.error( 'Translations file must by PO format' )
+            console.error('Translations file must by PO format ', options.translations);
             return {};
         }
 
         let file = config.localedirmap[language] + options.translations;
-        let data = fs.readFileSync(file, 'utf-8');
+
+        if ( !fs.existsSync(file) ) {
+            console.error('Translations file is not found ', file);
+            return {};
+        }
+
+        let data = fs.readFileSync(file);
         if (data) {
-            translationObj = pofile.parse(data);
+            translationObj = pofile.parse(data.toString());
         } else {
             console.error( `ERROR open ${file}` );
-            return false;
+            return {};
         }
     }
 
