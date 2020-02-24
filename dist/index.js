@@ -10,6 +10,8 @@ const callExpressionWithLiteral = require('./callExpressionWithLiteral.js');
 const decorateJsParserWithReplacer = require('./decorateJsParserWithReplacer.js');
 const config = require('./config.js');
 
+var cacheFilesParse = {};
+
 function gettext( options = {} ) {
     const filter = createFilter( options.include, options.exclude );
 
@@ -81,9 +83,12 @@ function gettext( options = {} ) {
         transform(code, id) {
             if ( !filter( id ) ) return ;
 
-            vueParser.parseSourceFile(code, id);
+            if (!cacheFilesParse[id]) {
+                vueParser.parseSourceFile(code, id);
+                cacheFilesParse[id] = vueParser;
+            }
 
-            return vueParser.replaceMessageNodes(code, id, translationObj)
+            return cacheFilesParse[id].replaceMessageNodes(code, id, translationObj)
                 .then(function(source){
                     var map = sourcemap ? new SourceMapGenerator({file: id}) : '';
 

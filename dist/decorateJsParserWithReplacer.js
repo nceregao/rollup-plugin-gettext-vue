@@ -96,9 +96,9 @@ function getItemToReplace(node, message, translationObj){
         resultText;
 
     if ( message.textPlural )
-        resultText = resolveNGettext(node, poitem);
+        resultText = resolveNGettext(node, message, poitem);
     else
-        resultText = resolveGettext(node, poitem);
+        resultText = resolveGettext(node, message, poitem);
 
     return {
         srcTxt: node.getText(),
@@ -106,14 +106,22 @@ function getItemToReplace(node, message, translationObj){
     };
 }
 
-function resolveGettext(node, item){
-    let text = item ? (item.nplurals > 1 ? item.msgstr[0] : item.msgstr) || item.msgid : '',
-        resultText = item ? ts.getLiteralText(ts.createLiteral(text, ts.isSingleOrDoubleQuote(node.arguments[0].getText().charCodeAt(0)))) : node.arguments[0].getText();
+function resolveGettext(node, message, item){
+    let argsNum = message.context ? 1 : 0,
+        resultText;
+
+    if (item) {
+        let text = (item.nplurals > 1 ? item.msgstr[0] : item.msgstr) || item.msgid;
+        let quote = ts.isSingleOrDoubleQuote(node.arguments[argsNum].getText().charCodeAt(0));
+        resultText = ts.getLiteralText(ts.createLiteral(text, quote));
+    } else {
+        resultText = node.arguments[argsNum].getText();
+    }
 
     return resultText;
 }
 
-function resolveNGettext(node, item){
+function resolveNGettext(node, message, item){
     let argumentsArray = item ? (item.nplurals > 1 && item.msgstr[0] ? item.msgstr : [item.msgid, item.msgid_plural]) : [];
     let allCallNames = node.expression.getText();
     let callName = !ts.isIdentifier(node.expression) ? node.expression.name.getText() : node.expression.getText();
