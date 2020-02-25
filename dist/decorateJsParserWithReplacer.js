@@ -77,13 +77,29 @@ module.exports = function (jsParser) {
         if ( !jsParser.replacements ) return Promise.reject('Replacements is empty');
 
         return new Promise(function(resolve, reject){
+            let resmsg = {};
+            let translations = {};
+
+            // transform items to { 'context:text': item }
+            translationObj && translationObj.items.forEach(item => {
+                translations[item.msgctxt+':'+item.msgid] = item;
+            });
+
             jsParser.replacements.forEach(function(item){
-                if ( fileName.replace(/\\/g, '/').indexOf(item.fileName) >= 0 ) {
-                    var replaceItem = getItemToReplace(item.node, item.message, translationObj);
-                    source = source.replace(replaceItem.srcTxt, replaceItem.dstStr);
-                    // console.log( replaceItem.srcTxt, replaceItem.dstStr )
+                if (fileName.replace(/\\/g, '/').indexOf(item.fileName) >= 0) {
+                    let replaceItem = getItemToReplace(item.node, item.message, translations);
+                    if (!resmsg[replaceItem.srcTxt]) {
+                        resmsg[replaceItem.srcTxt] = replaceItem.dstStr;
+                    }
                 }
             });
+
+            for (let srcTxt in resmsg) {
+                let regTxt = new RegExp(srcTxt.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1"), "gi");
+                let dstStr = resmsg[srcTxt];
+                source = source.replace(regTxt, dstStr);
+            }
+
             resolve(source);
         });
     };
@@ -91,8 +107,8 @@ module.exports = function (jsParser) {
     return jsParser;
 };
 
-function getItemToReplace(node, message, translationObj){
-    let poitem = searchPoItem(translationObj, message.text, message.context),
+function getItemToReplace(node, message, translations){
+    let poitem = translations[message.context+':'+message.text] || false,
         resultText;
 
     if ( message.textPlural )
@@ -112,8 +128,8 @@ function resolveGettext(node, message, item){
 
     if (item) {
         let text = (item.nplurals > 1 ? item.msgstr[0] : item.msgstr) || item.msgid;
-        let quote = ts.isSingleOrDoubleQuote(node.arguments[argsNum].getText().charCodeAt(0));
-        resultText = ts.getLiteralText(ts.createLiteral(text, quote));
+        let isSingleQuote = node.arguments[argsNum].getText().charCodeAt(0) === 39;
+        resultText = ts.getLiteralText(ts.createLiteral(text, isSingleQuote), '', false, true);
     } else {
         resultText = node.arguments[argsNum].getText();
     }
@@ -130,7 +146,7 @@ function resolveNGettext(node, message, item){
         return node.getText();
 
     argumentsArray = argumentsArray.map(function(el){
-        return ts.getLiteralText(ts.createStringLiteral(el));
+        return ts.getLiteralText(ts.createStringLiteral(el), '', false, true);
     });
 
     if ( config.calleeNames.npgettext.indexOf(callName) >= 0 ) {
@@ -142,15 +158,3 @@ function resolveNGettext(node, message, item){
 
     return allCallNames + '('+argumentsArray.join(',') + ')';
 }
-
-function searchPoItem(translations, text, context){
-    if ( translations && translations.items && translations.items.length > 0 )
-    {
-        for ( var i = translations.items.length - 1; i >= 0; i-- )
-                if ( translations.items[i].msgctxt == context && translations.items[i].msgid == text )
-                        return translations.items[i];
-    }
-
-    return false;
-}
-
