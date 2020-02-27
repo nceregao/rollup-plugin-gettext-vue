@@ -82,7 +82,7 @@ module.exports = function (jsParser) {
 
             // transform items to { 'context:text': item }
             translationObj && translationObj.items.forEach(item => {
-                translations[item.msgctxt+':'+item.msgid] = item;
+                translations[(item.msgctxt ? item.msgctxt+':' : '')+item.msgid] = item;
             });
 
             jsParser.replacements.forEach(function(item){
@@ -95,7 +95,7 @@ module.exports = function (jsParser) {
             });
 
             for (let srcTxt in resmsg) {
-                let regTxt = new RegExp(srcTxt.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1"), "gi");
+                let regTxt = new RegExp(srcTxt.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1"), 'g');
                 let dstStr = resmsg[srcTxt];
                 source = source.replace(regTxt, dstStr);
             }
@@ -108,7 +108,7 @@ module.exports = function (jsParser) {
 };
 
 function getItemToReplace(node, message, translations){
-    let poitem = translations[message.context+':'+message.text] || false,
+    let poitem = translations[(message.context ? message.context+':' : '')+message.text] || false,
         resultText;
 
     if ( message.textPlural )
