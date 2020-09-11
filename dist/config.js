@@ -4,12 +4,14 @@ const LOCALES_EXT = {
     'en': 'en_US',
     'ru': 'ru_UA',
     'uk': 'uk_UA',
+    'pl': 'pl_PL',
 };
 
 const LOCALEDIRMAP = {
     'en': 'locale/en_US/LC_MESSAGES/',
     'ru': 'locale/ru_UA/LC_MESSAGES/',
     'uk': 'locale/uk_UA/LC_MESSAGES/',
+    'pl': 'locale/pl_PL/LC_MESSAGES/',
 };
 
 const calleeNames = {
