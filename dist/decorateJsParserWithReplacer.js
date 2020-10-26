@@ -129,7 +129,7 @@ function resolveGettext(node, message, item){
     if (item) {
         let text = (item.nplurals > 1 ? item.msgstr[0] : item.msgstr) || item.msgid;
         let isSingleQuote = node.arguments[argsNum].getText().charCodeAt(0) === 39;
-        resultText = ts.getLiteralText(ts.createLiteral(text, isSingleQuote), '', false, true);
+        resultText = ts.getLiteralText(ts.createLiteral(text, isSingleQuote), '', true, false);
     } else {
         resultText = node.arguments[argsNum].getText();
     }
@@ -146,7 +146,7 @@ function resolveNGettext(node, message, item){
         return node.getText();
 
     argumentsArray = argumentsArray.map(function(el){
-        return ts.getLiteralText(ts.createStringLiteral(el), '', false, true);
+        return ts.getLiteralText(ts.createStringLiteral(el), '', true, false);
     });
 
     if ( config.calleeNames.npgettext.indexOf(callName) >= 0 ) {
