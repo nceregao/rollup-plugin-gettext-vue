@@ -68,15 +68,19 @@ function gettext( options = {} ) {
                 bundleOpts.sourcemap !== false;
         },
         intro() {
-            let pluralFunc = pluralForm.getPluralFunc(language);
-            let nplurals = pluralForm.getNPlurals(language);
-            let results = 'const PLURAL = '+config.calleeFunctions.PLURAL;
+            let results = '';
 
-            // add glogal functions
-            results = results.replace('PLURALFUNC', pluralFunc.toString()).replace('NPLURALS', nplurals);
-            config.optionsArray.forEach(function(el){
-                results += "\n"+'const '+el.globalName+' = '+el.calleeFuncBody;
-            });
+            if (options.igettext !== false) {
+                let pluralFunc = pluralForm.getPluralFunc(language);
+                let nplurals = pluralForm.getNPlurals(language);
+                results = 'const PLURAL = '+config.calleeFunctions.PLURAL;
+
+                // add glogal functions
+                results = results.replace('PLURALFUNC', pluralFunc.toString()).replace('NPLURALS', nplurals);
+                config.optionsArray.forEach(function(el){
+                    results += "\n"+'const '+el.globalName+' = '+el.calleeFuncBody;
+                });
+            }
 
             return results;
         },
