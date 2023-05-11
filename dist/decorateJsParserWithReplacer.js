@@ -74,7 +74,7 @@ module.exports = function (jsParser) {
     };
 
     jsParser.replaceMessageNodes = function(source, fileName, translationObj){
-        if ( !jsParser.replacements ) return Promise.reject('Replacements is empty');
+        if ( !jsParser.replacements ) return Promise.reject();
 
         return new Promise(function(resolve, reject){
             let resmsg = {};

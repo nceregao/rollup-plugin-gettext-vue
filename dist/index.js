@@ -102,7 +102,7 @@ function gettext( options = {} ) {
                     };
                 })
                 .catch(function(err){
-                    console.log(err);
+                    err && console.log(err);
                 })
         },
         buildEnd(error) {
