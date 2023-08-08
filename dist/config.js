@@ -5,7 +5,7 @@ const LOCALES_EXT = {
     'ru': 'ru_UA',
     'uk': 'uk_UA',
     'uz': 'uz_UZ',
-    'kz': 'kk_UZ',
+    'kk': 'kk_UZ',
     'pl': 'pl_PL',
 };
 
@@ -14,7 +14,7 @@ const LOCALEDIRMAP = {
     'ru': 'locale/ru_UA/LC_MESSAGES/',
     'uk': 'locale/uk_UA/LC_MESSAGES/',
     'uz': 'locale/uz_UZ/LC_MESSAGES/',
-    'kz': 'locale/kk_KZ/LC_MESSAGES/',
+    'kk': 'locale/kk_KZ/LC_MESSAGES/',
     'pl': 'locale/pl_PL/LC_MESSAGES/',
 };
 
